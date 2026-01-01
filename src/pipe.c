@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <sys/wait.h>
 
 int handle_pipe(char **args) {
     int i;
