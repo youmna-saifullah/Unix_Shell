@@ -1,9 +1,15 @@
 #include "shell.h"
 
-char *builtin_str[] = {"cd", "ls", "cat", "cp", "exit"};
-int (*builtin_func[])(char **) = {
-    shell_cd, shell_ls, shell_cat, shell_cp, shell_exit
+char *builtin_str[] = {
+    "cd", "ls", "cat", "cp", "export", "history", "exit"
 };
+
+int (*builtin_func[])(char **) = {
+    shell_cd, shell_ls, shell_cat, shell_cp,
+    shell_export, shell_history, shell_exit
+};
+
+
 
 #define BUILTIN_COUNT (sizeof(builtin_str) / sizeof(char *))
 
@@ -55,6 +61,13 @@ int main() {
 
         printf("myshell> ");
         line = read_line();
+        
+        FILE *hf = fopen(".myshell_history", "a");
+        if (hf) {
+            fprintf(hf, "%s\n", line);
+            fclose(hf);
+        }
+
         args = split_line(line);
         status = execute_args(args);
         free(line);
