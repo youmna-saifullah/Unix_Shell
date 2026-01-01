@@ -9,8 +9,10 @@ int (*builtin_func[])(char **) = {
 
 int shell_exit(char **args) {
     (void)args;
-    return 0;
+    printf("logout\n");
+    exit(0);   
 }
+
 
 int execute_args(char **args) {
     if (!args[0]) return 1;
