@@ -14,12 +14,6 @@ int (*builtin_func[])(char **) = {
 
 #define BUILTIN_COUNT (sizeof(builtin_str) / sizeof(char *))
 
-int shell_exit(char **args) {
-    (void)args;
-    printf("logout\n");
-    exit(0);   
-}
-
 
 int execute_args(char **args) {
     if (!args[0]) return 1;
