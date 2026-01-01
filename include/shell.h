@@ -36,6 +36,9 @@ int shell_ls(char **args);
 int shell_cat(char **args);
 int shell_cp(char **args);
 int shell_exit(char **args);
+int shell_history(char **args);
+int shell_export(char **args);
+
 
 /* Future Commands */
 int shell_help(char **args);
