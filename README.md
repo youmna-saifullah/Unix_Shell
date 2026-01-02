@@ -1,146 +1,111 @@
-## 🐚 My Custom Shell (System Programming Project)
+# Custom Linux Shell with GTK Administrative GUI
 
-**My Custom Shell** is a lightweight Unix-like command-line shell implemented in **C** using **Linux system calls**.
-This project is developed as part of a **System Programming** course to understand how real shells work internally, including command parsing, process creation, signal handling, file operations, redirection, and piping.
-
-The shell supports both **built-in commands** and **external Linux commands**, closely mimicking basic behavior of the Linux terminal.
+A robust, modular Unix-based shell implementation featuring a professional Graphical User Interface (GUI) built with GTK-3. This project bridges the gap between low-level system programming and modern desktop applications, offering 16+ built-in commands, process management, and I/O redirection.
 
 ---
 
-## ✨ Features
+## 👥 Authors & Contributors
 
-### 🔹 Core Shell Functionality
+This project was developed by:
 
-* Interactive command prompt (REPL loop)
-* Command parsing and tokenization
-* Graceful handling of `Ctrl+C` using signals
-* Clean exit without crashing
-
-### 🔹 Built-in Commands
-
-* `cd` – change directory
-* `exit` – exit the shell
-* `ls` – list directory contents
-
-  * Supports `ls -l` (detailed view similar to Linux)
-* `cat` – display or create files
-* `cp` – copy files
-
-### 🔹 File System Operations
-
-* Uses low-level Linux system calls:
-
-  * `open()`, `read()`, `write()`, `close()`
-  * `stat()`, `lstat()`
-  * `opendir()`, `readdir()`
-
-### 🔹 Output Redirection
-
-* Supports `>` for redirecting standard output
-
-  ```bash
-  ls > output.txt
-  cat file.txt > newfile.txt
-  ```
-
-### 🔹 Pipes
-
-* Supports single pipe `|`
-
-  ```bash
-  ls | grep .c
-  cat file.txt | grep hello
-  ```
-
-### 🔹 Process Management
-
-* Uses `fork()`, `execvp()`, and `wait()`
-* Built-ins run in parent process
-* External commands run in child processes
+* **Youmna Saifullah**
+* **Maryam Fareed**
+* **Beenish Gulana**
 
 ---
 
-## 🧠 Technical Concepts Used
+## 🚀 Features
 
-* Linux system calls
-* Process creation (`fork`)
-* Program execution (`execvp`)
-* Inter-process communication (`pipe`)
-* File descriptor duplication (`dup2`)
-* Signal handling (`SIGINT`)
-* Directory and file metadata (`stat`, `lstat`)
-* Modular project structure
+* **Hybrid Interface:** Supports both traditional terminal-based interaction and a GTK-3 graphical dashboard.
+* **16+ Built-in Commands:** Including `ls`, `cd`, `cat`, `cp`, `pwd`, `mkdir`, `rm`, `chmod`, `history`, `export`, `kill`, `echo`, and a comprehensive `man` page system.
+* **Advanced Logic:** Full support for **Pipes (`|`)**, **I/O Redirection (`>`, `>>`, `<`)**, and **Signal Handling** (e.g., Ctrl+C protection).
+* **System Monitoring:** Integrated GUI button hooks for administrative system oversight.
+* **Persistent History:** All commands are logged to a hidden history file for audit trails.
+
+---
+
+## 🛠 Prerequisites & Installation
+
+### 1. Environment Setup (Linux/WSL)
+
+Ensure you have the GTK-3 development libraries and build essentials installed:
+
+```bash
+sudo apt update
+sudo apt install libgtk-3-dev build-essential gcc
+
+```
+
+### 2. Running GUI on Windows (WSL Users)
+
+Since WSL does not natively render GUIs without a helper, you must use **VcXsrv**.
+
+#### Installing & Configuring VcXsrv:
+
+1. **Download:** [VcXsrv Windows X Server](https://sourceforge.net/projects/vcxsrv/).
+2. **Launch Settings:**
+* Select "Multiple Windows".
+* Set "Display number" to `0`.
+* **Crucial:** Check the box **"Disable access control"**.
+
+
+3. **In your WSL Terminal, run:**
+```bash
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+# OR if that fails:
+export DISPLAY=:0
+
+```
+
+
 
 ---
 
 ## 📂 Project Structure
 
-```
-my_custom_shell/
-├── include/
-│   └── shell.h
-├── src/
-│   ├── main.c
-│   ├── parser.c
-│   ├── signals.c
-│   ├── execute.c
-│   ├── redirection.c
-│   ├── pipe.c
-│   ├── builtins/
-│   │   └── cd.c
-│   └── filesystem/
-│       ├── ls.c
-│       ├── cat.c
-│       └── cp.c
-└── Makefile
+```text
+UNIX_SHELL-MAIN/
+├── include/           # Header files (shell.h)
+├── src/               
+│   ├── gui.c          # GTK Interface Logic
+│   ├── execute.c      # Command routing & execution
+│   ├── parser.c       # Command line string parsing
+│   ├── builtins/      # cd, exit, kill, echo, etc.
+│   └── filesystem/    # ls, rm, mkdir, man, etc.
+├── .myshell_history   # Hidden history log
+└── Makefile           # Automated build script
+
 ```
 
 ---
 
-## ⚙️ Compilation
+## 🔨 Building and Running
 
-Compile the shell using:
+To compile the entire project including the GUI, use the following command from the root directory:
 
 ```bash
-gcc -Wall -Wextra -std=gnu99 \
-src/main.c src/parser.c src/signals.c \
-src/execute.c src/redirection.c src/pipe.c \
-src/builtins/cd.c \
-src/filesystem/ls.c src/filesystem/cat.c src/filesystem/cp.c \
--o myshell
+gcc src/gui.c src/execute.c src/parser.c src/pipe.c src/redirection.c src/signals.c src/builtins/*.c src/filesystem/*.c -o myshell_gui -Iinclude $(pkg-config --cflags --libs gtk+-3.0)
+
 ```
 
-Run the shell:
+**Run the Shell:**
 
 ```bash
-./myshell
+./myshell_gui
+
 ```
 
 ---
 
-## 🎯 Learning Outcomes
+## 📚 Resources & References
 
-* Understanding how Unix shells work internally
-* Hands-on experience with system calls
-* Process control and file descriptor management
-* Building a modular and extensible system-level project in C
+The development of this shell was supported by the following resources:
 
----
+* **GeeksforGeeks:** [Write your own shell in C](https://www.geeksforgeeks.org/making-linux-shell-c/)
+* **GTK+ 3 Reference Manual:** [Gtk Widgets and Layouts](https://docs.gtk.org/gtk3/)
+* **TutorialsPoint:** [Unix Process Management & System Calls](https://www.tutorialspoint.com/unix/index.htm)
+* **VcXsrv Documentation:** [WSL2 GUI Setup Guide](https://github.com/microsoft/WSL/issues/4106)
 
-## 🚀 Future Enhancements
+* **Redirection:** Complex piping logic should be typed in the 'Run' box for full `execute_args` processing.
 
-* Input redirection `<`
-* Multiple pipes (`a | b | c`)
-* Command history stored in a file
-* Environment variable expansion
-* Background execution (`&`)
-
----
-
-## 👩‍💻 Author
-
-**Youmna Saifullah**
-System Programming Project
-=
-
-Just tell me 🌟
+Would you like me to help you create an automated **Makefile** so you can just type `make` to compile everything instead of that long command?
