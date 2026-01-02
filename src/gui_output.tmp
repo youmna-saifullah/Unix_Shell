@@ -1,0 +1,10 @@
+drwxr-xr-x   1 youmnacode youmnacode      512 Jan 02 14:30 builtins
+-rw-r--r--   1 youmnacode youmnacode     2642 Jan 02 11:10 execute.c
+drwxr-xr-x   1 youmnacode youmnacode      512 Jan 02 11:13 filesystem
+-rw-r--r--   1 youmnacode youmnacode     5824 Jan 02 14:53 gui.c
+-rw-r--r--   1 youmnacode youmnacode        0 Jan 02 14:54 gui_output.tmp
+-rw-r--r--   1 youmnacode youmnacode      739 Jan 02 11:11 main.c
+-rw-r--r--   1 youmnacode youmnacode      839 Jan 02 10:32 parser.c
+-rw-r--r--   1 youmnacode youmnacode      805 Jan 02 10:32 pipe.c
+-rw-r--r--   1 youmnacode youmnacode      654 Jan 02 10:33 redirection.c
+-rw-r--r--   1 youmnacode youmnacode      385 Jan 02 10:33 signals.c
